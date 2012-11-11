@@ -23,7 +23,7 @@ public class ImagePanel extends HBox
 {
 private Group graphic=new Group();
 private HBox iView;
-String colorst;
+String colorst = "000000";
 public ImagePanel(int width, int height)
 {
 setImageSize(width, height);
@@ -83,14 +83,16 @@ graphic.getChildren().add(t);
 public void drawArc(int x, int y, int width, int height, int startAngle, int arcAngle)
 {
 Arc arc = new Arc(x,y,width/2,height/2,startAngle,arcAngle);
-arc.setStroke(Paint.valueOf("000000"));
+arc.setStroke(Paint.valueOf(colorst));
 arc.setFill(Paint.valueOf("00000000"));
 graphic.getChildren().add(arc);
 }
 
 public void drawOval(int x, int y, int width, int height)
 {
-Node oval = new Ellipse(x,y,width,height);
+Ellipse oval = new Ellipse(x,y,width,height);
+oval.setStroke(Paint.valueOf(colorst));
+oval.setFill(Paint.valueOf("00000000"));
 graphic.getChildren().add(oval);
 }
 }
