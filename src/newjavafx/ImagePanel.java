@@ -79,14 +79,15 @@ public void drawString(int x, int y, String s)
 Text t = new Text(x,y,s);
 graphic.getChildren().add(t);
 }
+
 public void drawArc(int x, int y, int width, int height, int startAngle, int arcAngle)
 {
 Arc arc = new Arc(x,y,width/2,height/2,startAngle,arcAngle);
 arc.setStroke(Paint.valueOf("000000"));
 arc.setFill(Paint.valueOf("00000000"));
 graphic.getChildren().add(arc);
-
 }
+
 public void drawOval(int x, int y, int width, int height)
 {
 Node oval = new Ellipse(x,y,width,height);

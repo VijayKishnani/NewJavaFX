@@ -57,10 +57,13 @@ throw new ParseException("Unknown drawing command");
 }
 private void drawLine(String args) throws ParseException
 {
+    
 int x1 = 0;
 int y1 = 0;
 int x2 = 0;
 int y2 = 0;
+if((x1 < 0) || (y1 < 0) || (x2 < 0) || (y2 < 0)) throw new ParseException("Invalid values");
+
 StringTokenizer tokenizer = new StringTokenizer(args);
 x1 = getInteger(tokenizer);
 y1 = getInteger(tokenizer);
