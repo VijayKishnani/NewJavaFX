@@ -26,7 +26,7 @@ private int height;
 private ImagePanel imageRegion = new ImagePanel(DEFAULT_WIDTH,DEFAULT_HEIGHT); ;
 private TextArea textarea=new TextArea();
 private Button closeButton=new Button("Close Window");
-
+final Button nextButton = new Button("Next");
 public MainWindow(Stage stage)
 {
 this(stage,DEFAULT_WIDTH, DEFAULT_HEIGHT);
@@ -65,6 +65,9 @@ final HBox pictureRegion2 = new HBox();
 pictureRegion2.setPrefHeight(50);
 pictureRegion2.setAlignment(Pos.CENTER);
 pictureRegion2.setStyle("-fx-background-color: #E8E8E8");
+pictureRegion2.getChildren().add(nextButton);
+
+
 
 closeButton.setOnAction(new EventHandler<ActionEvent>() { 
 @Override
@@ -77,6 +80,11 @@ gridpane.add(pictureRegion2, 0, 2);
 
 return gridpane;
 }
+
+public Button getNextButton()
+        {
+            return nextButton;
+        }
 public ImagePanel getImagePanel()
 {
 return imageRegion;

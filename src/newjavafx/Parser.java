@@ -4,11 +4,18 @@ import java.awt.Color;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.Reader;
+import java.util.ArrayList;
 import java.util.StringTokenizer;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
+import javafx.scene.control.Button;
 import javafx.scene.layout.HBox;
 public class Parser
 {
 private BufferedReader reader;
+private int i = 0;
 private ImagePanel image;
 private MainWindow frame;
 public Parser(Reader reader, ImagePanel image, MainWindow frame)
@@ -62,13 +69,12 @@ int x1 = 0;
 int y1 = 0;
 int x2 = 0;
 int y2 = 0;
-if((x1 < 0) || (y1 < 0) || (x2 < 0) || (y2 < 0)) throw new ParseException("Invalid values");
-
 StringTokenizer tokenizer = new StringTokenizer(args);
 x1 = getInteger(tokenizer);
 y1 = getInteger(tokenizer);
 x2 = getInteger(tokenizer);
 y2 = getInteger(tokenizer);
+if((x1 < 0) || (y1 < 0) || (x2 < 0) || (y2 < 0)) throw new ParseException("Invalid values for Line");
 image.drawLine(x1,y1,x2,y2);
 }
 private void drawRect(String args) throws ParseException
@@ -77,12 +83,12 @@ int x1 = 0;
 int y1 = 0;
 int x2 = 0;
 int y2 = 0;
-if((x1 < 0) || (y1 < 0) || (x2 < 0) || (y2 < 0)) throw new ParseException("Invalid values");
 StringTokenizer tokenizer = new StringTokenizer(args);
 x1 = getInteger(tokenizer);
 y1 = getInteger(tokenizer);
 x2 = getInteger(tokenizer);
 y2 = getInteger(tokenizer);
+if((x1 < 0) || (y1 < 0) || (x2 < 0) || (y2 < 0)) throw new ParseException("Invalid values for Rectangle");
 image.drawRect(x1, y1, x2, y2);
 }
 private void fillRect(String args) throws ParseException
@@ -91,12 +97,12 @@ int x1 = 0;
 int y1 = 0;
 int x2 = 0;
 int y2 = 0;
-if((x1 < 0) || (y1 < 0) || (x2 < 0) || (y2 < 0)) throw new ParseException("Invalid values");
 StringTokenizer tokenizer = new StringTokenizer(args);
 x1 = getInteger(tokenizer);
 y1 = getInteger(tokenizer);
 x2 = getInteger(tokenizer);
 y2 = getInteger(tokenizer);
+if((x1 < 0) || (y1 < 0) || (x2 < 0) || (y2 < 0)) throw new ParseException("Invalid values for Rectangle");
 image.fillRect(x1, y1, x2, y2);
 }
 private void drawArc(String args) throws ParseException
@@ -122,12 +128,13 @@ int x1 = 0;
 int y1 = 0;
 int width = 0;
 int height = 0;
-if((x1 < 0) || (y1 < 0) || (width < 0) || (height < 0)) throw new ParseException("Invalid values");
+
 StringTokenizer tokenizer = new StringTokenizer(args);
 x1 = getInteger(tokenizer);
 y1 = getInteger(tokenizer);
 width = getInteger(tokenizer);
 height = getInteger(tokenizer);
+if((x1 < 0) || (y1 < 0) || (width < 0) || (height < 0)) throw new ParseException("Invalid values for Oval");
 image.drawOval(x1, y1, width, height);
 }
 private void drawString(String args) throws ParseException
@@ -171,4 +178,32 @@ else {
 throw new ParseException("Missing Integer value");
 }
 }
+
+   public void parseStepbyStep(final Button nextButton) throws IOException 
+    {
+        String line = reader.readLine();
+final ArrayList<String> asl=new ArrayList<String>();
+while (line != null)
+{ 
+asl.add(line);
+line = reader.readLine();
+}
+nextButton.setOnAction(new EventHandler<ActionEvent>() 
+{
+public void handle(ActionEvent event) 
+{
+try 
+{
+parseLine(asl.get(i));
+i++;
+if(i==asl.size())
+{
+    nextButton.setDisable(true);
+}
+} catch (ParseException ex) { 
+Logger.getLogger(Parser.class.getName()).log(Level.SEVERE, null, ex);
+} 
+}
+});
+    }
 }
